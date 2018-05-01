@@ -1,0 +1,199 @@
+
+%  ____      _   _                 _          _ 
+% |  _ \ _ _(_)_(_) __ _ _ __ ___ | |__   ___| |
+% | |_) | '__/ _` |/ _` | '_ ` _ \| '_ \ / _ \ |
+% |  __/| | | (_| | (_| | | | | | | |_) |  __/ |
+% |_|   |_|  \__,_|\__,_|_| |_| |_|_.__/ \___|_|
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+
+% In diesem Dokument nur Pakete und Inhaltsdateien einbinden
+% Keinen Text reinschreiben! 
+                                              
+\documentclass[a4paper,11pt, titlepage, headsepline, openright, bibliography=totoc, toc=listof, parskip=half, headings=optiontoheadandtoc]{scrbook}
+
+% Packages ================================
+\usepackage[ngerman]{babel}				% Inhaltsverzeichnis etc. auf Deutsch /Englisch
+\usepackage[utf8]{inputenc}				% Dokumente stets UTF-8 kodieren!
+\usepackage{geometry}	 				% Seitengeometrie
+\usepackage[font=footnotesize]{caption} % Bildunterschriften so groß wie Fußnoten
+\usepackage{graphicx}					% Grafiken einbinden
+\usepackage{subcaption}					% Unterteilung von Grafiken (subfigure)
+\usepackage{psfrag}						% EPS-Grafiken modifizieren, Texte anpassen
+\usepackage{enumerate}					% Erweiterte Möglichkeiten für Aufzählungen
+\usepackage{amsmath} 					% Mathematikumgebungen
+\usepackage{amssymb}					% Symbole für Mathematik
+\usepackage{amsfonts}					% Schriftarten für Mathematikumgebung
+\usepackage{commath}					% Differentialoperatoren
+\usepackage{textgreek}					% Griechische Buchstaben für Text-Umgebung
+\usepackage{upgreek}					% Aufrechte, griechische Buchstaben (benötigt für Kopfzeilen)
+\usepackage{extarrows}					% mehr Pfeile
+\usepackage[textwidth=3.0cm, colorinlistoftodos]{todonotes}					% Todo-Notizen
+\usepackage{booktabs}					% Schöne Tabellen
+\usepackage{longtable}				% Seitenumbrüche in Tabellen
+\usepackage{tabularx}
+\usepackage{fancyvrb} 					% Schöne Code-Snippets (Verbatim-Umgebung)
+\usepackage{import}						% Einbinden von Dateien aus anderen Ordnern
+\usepackage[figuresright]{rotating}					% gedrehte Bilder ermöglichen
+\usepackage{pdflscape}				% gedrehte Seiten in PDF
+\usepackage[pdfborder={0 0 0}, linktoc=all]{hyperref}					
+										% Links und Verweise innerhalb des PDF
+										
+% Wissenschaftliche Tools =================
+\usepackage[version=3]{mhchem}			% für Darstellung von Isotopen
+\usepackage{braket} 					% zur Nutzung quantenmech. Bras und Kets
+\usepackage{siunitx}					% SI-Einheiten
+\sisetup{locale = DE}					% Lokalisation auf deutsche Standards
+\sisetup{separate-uncertainty = true}
+\DeclareSIUnit\year{a}
+
+% Geometrie ===============================
+
+% Korrektur der Größe der Leerzeile (Zur Vermeidung der Badboxen)
+\usepackage[onehalfspacing]{setspace}
+\recalctypearea
+
+\geometry{	a4paper, 
+						includeheadfoot,	% Abstandsangaben enthalten Kopf- und Fusszeile
+						top=3.0cm, 				% Abstand oben
+						bottom=3.0cm, 		% Abstand unten
+						left=3.0cm, 				% Abstand "innen"
+						right=3.0cm, 				% Abstand "außen" <<<- Wieder auf 2cm setzen...!
+						footnotesep=5ex,	% Abstand Textkörper - Fußnoten
+						footskip=5ex,			% Abstand Fußnoten - Fußzeile (Seitenzahl)
+						headsep=5ex}			% Abstand Kopfzeile (Kapitelüberschrift) - Textkörper
+\linespread{1.2}							% Zeilenabstand
+\setlength{\parindent}{0 em}	% Zeileneinzug bei Absatzanfang abschalten
+
+% Schriftarten ============================
+\usepackage[T1]{fontenc}									% Ausgabe auf T1
+%\usepackage{lmodern} 										% Schriftartenpaket lmodern
+\usepackage[bitstream-charter]{mathdesign}
+
+
+% Literaturverzeichnis ====================
+\renewcommand{\bibliography}[1]{}							% Dieser Eintrag löscht den \bibliography-Befehl
+\bibliography{literatur}									% Mit diesem Eintrag wird TeXnicCenter auf die
+															% literatur.bib-Datei aufmerksam gemacht. 
+															% Damit stehen die Referenzen unter "Literatur" zur
+															% Verfügung.
+\usepackage[	backend=biber,
+				style=alphabetic, 
+				natbib=true, 
+				url=true, 
+				isbn=false, 
+				doi=true,
+			]{biblatex} 		
+															% Biblatex-Literaturverzeichnis mit bibtex-Backend
+															% Dies erfordert, dass in den Optionen
+															% "Ausgabeprofil" "...\bin\biber.exe" anstatt
+															% "...\bin\bibtex.exe" eingestellt wird!
+															
+\usepackage[babel,german=quotes]{csquotes}
+															% Deutsche Anführungszeichen im Literaturverzeichis
+\addbibresource{./literatur.bib}
+															% Pfad zur Literatur-DB
+						
+%-------------------------------------------
+% Namensformat in Nachname, Vorname
+\DeclareNameAlias{author}{last-first}%
+\DeclareNameAlias{editor}{last-first}%
+%-------------------------------------------
+% Autorennamen in Kapitälchen
+\renewcommand{\mkbibnamefirst}[1]{\textsc{#1}}%
+\renewcommand{\mkbibnamelast}[1]{\textsc{#1}}%
+\renewcommand{\mkbibnameprefix}[1]{\textsc{#1}}%
+\renewcommand{\mkbibnameaffix}[1]{\textsc{#1}}%
+%-------------------------------------------
+% Doppelpunkt nach letztem Autor
+\renewcommand*{\labelnamepunct}{\addcolon\addspace}
+%-------------------------------------------
+% Herausgeber in Klammern: (Hrsg.)																									
+\DefineBibliographyStrings{ngerman}{
+editor = {\mkbibparens{Hrsg\adddot}},
+editors = {\mkbibparens{Hrsg\adddot}},
+urlseen = {{zuletzt besucht am}},
+}
+%-------------------------------------------
+
+
+
+% Griechische Buchstaben ==============================															
+\renewcommand*{\textgreekfontmap}{
+	{*/b/n}{LGR/cmr/b/n}				% Ermöglicht Fettdruck griechischer Buchstaben
+	{*/*/n}{LGR/cmr/m/n}
+}
+
+% Kürzel für Wissenschaftliche Ausdrücke ==============
+\newcommand{\he}{\ce{^{4}_{2}He}}											% Isotopendarstellung für He-Kern
+\newcommand{\tcc}[1]{\ce{^{#1}_{43}Tc}}								% Isotopendarstellung für Technetium 
+																											% (complete, vollständige Darstellung mit
+																											% Ordnungsnummer)
+\newcommand{\tc}[1]{\ce{^{#1}Tc}}											% Isotopendarstellung für Technetium
+																											% (Kurzform)
+\newcommand{\arc}[1]{\ce{^{#1}_Ar}}										% Isotopendarstellung für Argon
+                                                      % (complete, vollständige Darstellung mit 
+																											% Ordnungsnummer)
+\newcommand{\ar}[1]{\ce{^{#1}Ar}}											% Isotopendarstellung für Argon (Kurzform)
+\newcommand{\diff}[2]{\frac{\dif{#1}}{\dif{#2}}}			% WRAPPER für Differentialoperator (jetzt mit commath)
+\newcommand{\pdiff}[2]{\frac{\partial{#1}}{\partial{#2}}}
+\newcommand*\laplace{\mathop{}\!\mathbin\Delta}
+
+
+% Kürzel, die einem das Leben einfacher machen ========
+\newcommand{\pilist}{PI-LIST}
+\newcommand{\tisa}{Titan:Saphir}
+\newcommand{\ibsimu}{IBSimu}
+\newcommand{\rims}{Re\-so\-nanz\-io\-ni\-sa\-ti\-ons-Mas\-sen\-spek\-tro\-me\-trie}
+
+% Kürzel für ToDo-Notes
+\newcommand{\citationneeded}[1]{\todo[color=green!40]{\textbf{Zitat:} #1}}
+\newcommand{\todoanalysis}[1]{\todo[color=red!40]{\textbf{Auswertung:} #1}}
+\newcommand{\todoresearch}[1]{\todo[color=blue!40]{\textbf{Recherche:} #1}}
+\newcommand{\todoimage}[1]{\todo[color=red!40!green!40]{\textbf{Abbildung:} #1}}
+\newcommand{\missingreference}[1]{\todo[color=red!80]{\textbf{Fehlende Referenz:} #1}}
+
+% Sonstiges =====================================================
+\graphicspath{{./images/}} 														% Standard-Pfad zu Bilddateien
+%\makeatletter\@addtoreset{chapter}{part}\makeatother  % In jedem "Part" werden die Kapitel neu gezählt
+
+
+
+
+
+%  ___       _           _ _   
+% |_ _|_ __ | |__   __ _| | |_ 
+%  | || '_ \| '_ \ / _` | | __|
+%  | || | | | | | | (_| | | |_ 
+% |___|_| |_|_| |_|\__,_|_|\__|
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{document}
+\frontmatter
+
+
+% Titelseite ====
+%\input{./00_deckblatt}
+
+% Inhaltsverzeichnis
+\tableofcontents
+\listoffigures
+\listoftables
+
+% Hier werden die Inhalte eingebunden! ============================
+\mainmatter
+\input{./content}
+
+
+
+% =================================================================
+
+% Quellenverzeichnis
+\printbibliography 
+
+% Anhang
+\appendix
+
+%\input{./appendix}
+
+\listoftodos{}
+\end{document}
+

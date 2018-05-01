@@ -1,0 +1,17 @@
+## Ignore all LaTeX-specific intermediate files: 
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.lof
+*.log
+*.lot
+*.out
+*.run.xml
+*.synctex
+*.tdo
+*.toc
+*.tps
+
+## Ignore output (PDF)-file
+*.pdf
